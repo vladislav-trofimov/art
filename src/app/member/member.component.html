@@ -1,0 +1,29 @@
+<div class="layout">
+    <div>
+        <button (click)="logout()">Выйти</button>
+    </div>
+    <div class="gallery">
+        <div *ngFor="let image of images" class="image-card">
+            <img [src]="image.url" [alt]="image.description">
+            <p>{{ image.description }}</p>
+        </div>
+    </div>
+
+    <section class="upload-form">
+        <h2>Загрузите ваше изображение</h2>
+        <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm">
+            <input type="file" name="file" (change)="onFileChange($event)" required>
+            <textarea formControlName="description" rows="4" placeholder="Введите описание изображения" required></textarea>
+            <label for="category">Category:</label>
+            <select formControlName="category" id="category">
+                <option value="1" selected>Modern</option>
+                <option value="2">Classic</option>
+                <option value="3">Anime</option>
+                <option value="4">Custom</option>
+            </select>
+            <button type="submit">Отправить</button>
+        </form>
+    </section>
+</div>
+            
+    

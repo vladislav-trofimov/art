@@ -1,0 +1,20 @@
+<div class="auth-container">
+    <form (ngSubmit)="isLogin ? onLogin() : onRegister()" #authForm="ngForm">
+      <h2>{{ isLogin ? 'Вход' : 'Регистрация' }}</h2>
+      <label for="username">Имя пользователя:</label>
+      <input type="text" id="username" name="username" ngModel required>
+  
+      <label for="password">Пароль:</label>
+      <input type="password" id="password" name="password" ngModel required>
+  
+      <div *ngIf="!isLogin">
+        <label for="confirmPassword">Повторите пароль:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" ngModel required>
+      </div>
+      <button type="submit">{{ isLogin ? 'Войти' : 'Зарегистрироваться' }}</button>
+      <button type="button" (click)="toggleForm()">
+        {{ isLogin ? 'Перейти к регистрации' : 'Уже зарегистрированы? Войти' }}
+      </button>
+    </form>
+    <a href="/store" class="view-all-link">Посмотреть все работы</a>
+</div>

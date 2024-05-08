@@ -1,0 +1,103 @@
+.layout {
+    font-family: Arial, sans-serif; /* Устанавливает шрифт для всей страницы */
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    min-height: 800px;
+}
+
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.image-card {
+    margin: 10px;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.image-card img {
+    width: 100%;
+    height: auto; /* Чтобы изображение сохраняло пропорции */
+}
+
+.upload-form {
+    width: 300px;
+    margin: 20px auto;
+    background: white;
+    padding: 20px;
+    margin-top: 100px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.upload-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.upload-form input, .upload-form textarea, .upload-form button {
+    margin-top: 10px;
+}
+
+.upload-form button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.upload-form button:hover {
+    background-color: #0056b3;
+}
+
+img {
+    width: 200px !important;
+    height: 200px !important;
+    transition: all 0.3s ease;
+}
+
+img:hover {
+    width: 250px !important; 
+    height: 250px !important; 
+}
+
+label {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    margin-top: 20px;
+    color: #333333;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Styles for the dropdown */
+.dropdown {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333333;
+    padding: 8px 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 40px;
+    width: 200px;
+    cursor: pointer;
+}
+
+/* Change the focus styles */
+.dropdown:focus {
+    border-color: #6666ff;
+    outline: none;
+}
+
+/* Optional: styling for options */
+.dropdown option {
+    padding: 10px;
+}
