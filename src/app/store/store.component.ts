@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { MatSelectChange } from '@angular/material/select';
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
@@ -13,8 +13,25 @@ export class StoreComponent {
   images: any[] = [];
   serverName = 'http://localhost:3000';
 
+  categories = [
+    {id: 1, name: 'Modern'},
+    {id: 2, name: 'Classic'},
+    {id: 3, name: 'Anime'},
+    {id: 4, name: 'Custom'},
+    {id:0, name: 'All'}
+  ];
+
   ngOnInit() {
-    this.http.get(`${this.serverName}/images`).subscribe(
+    this.sendRequest(null);
+  }
+
+  onSelectionChange(event: MatSelectChange) {
+    this.sendRequest(event.value);
+  }
+
+  sendRequest(categoryId: number | null) {
+    const category = categoryId ? `?category_id=${categoryId}` : '';
+    this.http.get(`${this.serverName}/images${category}`).subscribe(
       (response: any) => {
         this.images = response;
         this.images = this.images.map((image) => {

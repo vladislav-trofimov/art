@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Component({
   selector: 'app-member',
@@ -13,7 +15,12 @@ export class MemberComponent {
   images: any[] = [];
   serverName = 'http://localhost:3000';
 
-  constructor(private http: HttpClient, private router: Router) {
+  userData = {
+    name: '',
+    avatar: ''
+  };
+
+  constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService, private route: ActivatedRoute) {
     this.uploadForm = new FormGroup({
       file: new FormControl(null),
       description: new FormControl(''),
@@ -23,6 +30,22 @@ export class MemberComponent {
 
   ngOnInit() {
     this.getImages();
+    this.route.queryParams.subscribe(params => {
+      const token = params['token'];
+      console.log('Token', token);
+      if (token) {
+        this.decodeToken(token);
+      }
+    });
+  }
+
+  decodeToken(token: string) {
+    const decodedToken = this.jwtHelper.decodeToken(token);
+    this.userData.name = decodedToken.name;
+    //this.userData.avatar = decodedToken.avatar;
+    this.userData.avatar = `http://localhost:3000/avatar?id=${decodedToken.id}`;
+    localStorage.setItem('user_id', decodedToken.user_id);
+    console.log('Decoded token', decodedToken);
   }
 
   onFileChange(event: any) {

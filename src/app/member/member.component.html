@@ -1,10 +1,13 @@
 <div class="layout">
-    <div>
-        <button (click)="logout()">Выйти</button>
-    </div>
+    <div class="user-profile" *ngIf="userData.name">
+        <img [src]="userData.avatar" alt="User Avatar" class="user-avatar">
+        <span class="user-name">{{ userData.name }}</span>
+        <div><button (click)="logout()">Выйти</button></div>
+      </div>
+
     <div class="gallery">
         <div *ngFor="let image of images" class="image-card">
-            <img [src]="image.url" [alt]="image.description">
+            <img [src]="image.url" [alt]="image.description" class="art">
             <p>{{ image.description }}</p>
         </div>
     </div>

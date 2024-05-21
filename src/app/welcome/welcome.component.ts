@@ -2,6 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 
 @Component({
@@ -11,10 +13,15 @@ import { Router } from '@angular/router';
 })
 export class WelcomeComponent {
   @ViewChild('authForm') authForm!: NgForm;
-  constructor(private router: Router, private http: HttpClient) { }
+  constructor(
+    private router: Router, 
+    private http: HttpClient, 
+    private jwtHelper: JwtHelperService,
+    private route: ActivatedRoute
+    ) { }
 
   isLogin = true;
-  serverName = 'http://localhost:3000';  
+  serverName = 'http://localhost:3000';
 
   toggleForm() {
     this.isLogin = !this.isLogin;  
