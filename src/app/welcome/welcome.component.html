@@ -1,19 +1,20 @@
-<div class="auth-container">
+<body class="body">
+  <div class="auth-container">
     <form (ngSubmit)="isLogin ? onLogin() : onRegister()" #authForm="ngForm">
-      <h2>{{ isLogin ? 'Вход' : 'Регистрация' }}</h2>
-      <label for="username">Имя пользователя:</label>
+      <h2>{{ isLogin ? 'Login' : 'Registration' }}</h2>
+      <label for="username">User name:</label>
       <input type="text" id="username" name="username" ngModel required>
   
-      <label for="password">Пароль:</label>
+      <label for="password">Password:</label>
       <input type="password" id="password" name="password" ngModel required>
   
       <div *ngIf="!isLogin">
-        <label for="confirmPassword">Повторите пароль:</label>
+        <label for="confirmPassword">Repeat password:</label>
         <input type="password" id="confirmPassword" name="confirmPassword" ngModel required>
       </div>
-      <button type="submit">{{ isLogin ? 'Войти' : 'Зарегистрироваться' }}</button>
+      <button type="submit">{{ isLogin ? 'Login' : 'Registration' }}</button>
       <button type="button" (click)="toggleForm()">
-        {{ isLogin ? 'Перейти к регистрации' : 'Уже зарегистрированы? Войти' }}
+        {{ isLogin ? 'Go to registration' : 'Already registered? Login' }}
       </button>
     </form>
     <a href="http://localhost:3000/auth/google" class="google-btn">
@@ -23,5 +24,5 @@
       <span class="btn-text">Login with Google</span>
     </a>
 
-    <a href="/store" class="view-all-link">Посмотреть все работы</a>
-</div>
+    <a href="/store" class="view-all-link">View all works</a>
+</div></body>

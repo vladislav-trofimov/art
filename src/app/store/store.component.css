@@ -1,4 +1,5 @@
 .image-card {
+    flex: 0 0 calc(33.333% - 10px); 
     height: 100%;
     width: 100%;
     border-radius: 10px;
@@ -19,26 +20,21 @@
     margin-top: 5%;
 }
 
-.welcome {
-    margin-top: 3%;
-    position: relative;
-    width: 20%;
-}
+
 
 .container {
-    display: flex;       /* Enables Flexbox layout */
-    justify-content: space-between; /* Distributes space between and around content items */
-    align-items: flex-start; /* Aligns items to the start of the flex container */
+    margin: 5% 2%;
+    display: flex;       
+    justify-content: space-between; 
+    align-items: flex-start; 
 }
 
-.welcome {
-    flex: 1;  /* Each child will take equal width */
-}
+
 
 .image {
-    width: 100%;   /* Makes the image fill the container */
+    width: 100%;  
     height: auto;
-    border-bottom: 1px solid #ccc; /* Separates the image from the text */
+    border-bottom: 1px solid #ccc; 
 }
 
 .info {
