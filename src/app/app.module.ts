@@ -11,14 +11,26 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { StoreComponent } from './store/store.component';
 import { MemberComponent } from './member/member.component';
 
+
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatMenuModule } from '@angular/material/menu';
+
 import { JwtModule } from '@auth0/angular-jwt';
+import { ProfileEditComponent } from './profile-edit/profile-edit.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     StoreComponent,
-    MemberComponent
+    MemberComponent,
+    ProfileEditComponent,
+    MenuComponent
   ],
   imports: [
     FormsModule,
@@ -28,6 +40,12 @@ import { JwtModule } from '@auth0/angular-jwt';
     ReactiveFormsModule,
     BrowserAnimationsModule, 
     MatSelectModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule,
+    MatButtonModule,
+    MatMenuModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

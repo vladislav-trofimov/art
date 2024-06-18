@@ -35,6 +35,7 @@ export class MemberComponent {
       console.log('Token', token);
       if (token) {
         this.decodeToken(token);
+        localStorage.setItem('token', token);
       }
     });
   }
@@ -42,8 +43,13 @@ export class MemberComponent {
   decodeToken(token: string) {
     const decodedToken = this.jwtHelper.decodeToken(token);
     this.userData.name = decodedToken.name;
-    //this.userData.avatar = decodedToken.avatar;
-    this.userData.avatar = `http://localhost:3000/avatar?id=${decodedToken.id}`;
+    console.log('decodedToken', decodedToken);
+    if (decodedToken.id) {
+      this.userData.avatar = `http://localhost:3000/avatar?id=${decodedToken.id}`;
+    } else {
+      this.userData.avatar = decodedToken.avatar;
+    }
+    
     localStorage.setItem('user_id', decodedToken.user_id);
     console.log('Decoded token', decodedToken);
   }

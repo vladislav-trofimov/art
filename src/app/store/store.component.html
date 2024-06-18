@@ -1,22 +1,20 @@
-<div>
-    <mat-form-field appearance="fill">
-        <mat-label>Выбери категорию</mat-label>
-        <mat-select (selectionChange)="onSelectionChange($event)">
-          <mat-option *ngFor="let category of categories" [value]="category.id">
-            {{ category.name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-</div>
-<div class="container">
+<div class="wrapper">
+  <div class="menu">
+    <app-menu (selectArts)="handleSelectArts($event)"></app-menu>
+  </div>
+  <div class="container">
     <div class="gallery">
-        <div *ngFor="let image of images" class="image-card">
-            <img [src]="image.url" [alt]="image.description" class="image">
-            <div class="info">
-                <p class="description">Description: {{ image.description }}</p>
-                <p class="author">Author: {{ image.author }}</p>
-                <p class="style">Style: {{ image.category }}</p>
-            </div>
+      <div *ngFor="let image of images" class="image-card">
+        <img [src]="image.url" [alt]="image.description" class="image">
+        <div class="info">
+          <p class="description">Description: {{ image.description }}</p>
+          <p class="author">Author: {{ image.author }}</p>
+          <p class="style">Style: {{ image.category }}</p>
         </div>
+      </div>
     </div>
+    <div class="welcome">
+      <app-welcome></app-welcome>
+    </div>
+  </div>
 </div>

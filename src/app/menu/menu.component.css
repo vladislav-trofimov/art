@@ -1,0 +1,29 @@
+.example-container {
+    height: 100vh;
+    display: flex;
+  }
+  
+  .example-sidenav {
+    width: 200px;
+  }
+  
+  mat-nav-list {
+    width: 100%;
+  }
+  
+  mat-list-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  mat-icon {
+    margin-right: 16px;
+  }
+
+  .user-avatar {
+    border-radius: 50%;  
+    width: 30px;        
+    height: 30px;       
+    object-fit: cover;   
+    margin-right:10px;
+  }

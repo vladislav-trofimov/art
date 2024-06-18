@@ -32,8 +32,8 @@ export class WelcomeComponent {
     this.http.post(`${this.serverName}/login`, formValue).subscribe(
       (response: any) => {
         if (response['status'] === 200) {
-          console.log('Login successful', response);
-          this.router.navigate(['/member']);
+          console.log('Login successful', response['token']);
+          this.router.navigate(['/member'], { queryParams: { token: response['token'] } });
           localStorage.setItem('user_id', response['id']);
           return;
         } else {

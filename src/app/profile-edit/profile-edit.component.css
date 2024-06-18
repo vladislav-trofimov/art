@@ -1,0 +1,33 @@
+.user-avatar {
+  border-radius: 50%;  
+  width: 200px;        
+  height: 200px;       
+  object-fit: cover;   
+  margin-right:10px;
+}
+
+/* Стили для контейнера, который центрирует содержимое по вертикали и горизонтали */
+.container {
+  display: flex;
+  justify-content: center; /* Выравнивание по горизонтали */
+  margin: 0;
+  padding: 0;
+}
+
+/* Стили для профиля пользователя */
+.user-profile {
+  display: flex;
+  align-items: center; /* Выравнивание элементов внутри по центру по вертикали */
+  gap: 20px; /* Расстояние между элементами */
+}
+
+.user-avatar {
+  width: 100px; /* Ширина аватара */
+  height: 100px; /* Высота аватара */
+  border-radius: 50%; /* Делает аватар круглым */
+}
+
+.user-name {
+  font-size: 20px; /* Размер шрифта имени пользователя */
+  color: #333; /* Цвет шрифта */
+}

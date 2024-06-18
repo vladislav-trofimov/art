@@ -1,0 +1,16 @@
+<!-- Контейнер для центрирования содержимого -->
+<div class="container">
+  <div class="user-profile" *ngIf="userData.name">
+    <img [src]="userData.avatar" alt="User Avatar" class="user-avatar">
+    <span class="user-name">{{ userData.name }}</span>
+  </div>
+</div>
+<div class="gallery">
+  <div *ngFor="let image of images" class="image-card">
+    <img [src]="image.url" [alt]="image.description" class="image">
+    <div class="info">
+      <p class="description">Description: {{ image.description }}</p>
+      <p class="author">Author: {{ image.author }}</p>
+      <p class="style">Style: {{ image.category }}</p>
+    </div>
+  </div>
