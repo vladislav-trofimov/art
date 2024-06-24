@@ -1,10 +1,31 @@
 <!-- Контейнер для центрирования содержимого -->
-<div class="container">
+<div (click)="onOpen()" class="container">
   <div class="user-profile" *ngIf="userData.name">
     <img [src]="userData.avatar" alt="User Avatar" class="user-avatar">
     <span class="user-name">{{ userData.name }}</span>
   </div>
 </div>
+
+<div class="link">
+  <a href="/store">Вернуться к работам</a>
+</div>
+
+<section class="upload-form">
+  <h2>Загрузите ваше изображение</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm">
+      <input type="file" name="file" (change)="onFileChange($event)" required>
+      <textarea formControlName="description" rows="4" placeholder="Введите описание изображения" required></textarea>
+      <label for="category">Category:</label>
+      <select formControlName="category" id="category">
+          <option value="1" selected>Modern</option>
+          <option value="2">Classic</option>
+          <option value="3">Anime</option>
+          <option value="4">Custom</option>
+      </select>
+      <button type="submit">Отправить</button>
+  </form>
+</section>
+
 <div class="gallery">
   <div *ngFor="let image of images" class="image-card">
     <img [src]="image.url" [alt]="image.description" class="image">
@@ -13,4 +34,18 @@
       <p class="author">Author: {{ image.author }}</p>
       <p class="style">Style: {{ image.category }}</p>
     </div>
+</div>
+
+<div *ngIf="visible" class="modal-overlay">
+  <div class="modal-content">
+    <button class="close-button" (click)="onClose()">✖</button>
+    <div>
+      <h3>Загрузите аватар</h3>
+      <form (ngSubmit)="onSubmitUser()" [formGroup]="uploadFormUser">
+        <input type="file" name="fileUser" (change)="onFileChangeUser($event)" required>
+        <button type="submit">Отправить</button>
+      </form>
+    </div>
   </div>
+</div>
+

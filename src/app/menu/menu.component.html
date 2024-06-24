@@ -2,14 +2,14 @@
   <mat-sidenav #sidenav mode="side" opened="true">
     <mat-nav-list>
       <mat-list-item>
-        <div class="user-profile" *ngIf="userData.name">
+        <div class="user-profile" *ngIf="userData.userId">
           <img [src]="userData.avatar" alt="User Avatar" class="user-avatar">
           <span class="user-name">{{ userData.name }}</span>
         </div>
-        <div *ngIf="!userData.name">Гость</div>
+        <div *ngIf="!userData.userId">Гость</div>
       </mat-list-item>
-      <mat-list-item (click)="profile()">Профиль</mat-list-item>
-      <mat-list-item (click)="myWorks()">Мои работы</mat-list-item>
+      <mat-list-item *ngIf="userData.userId" (click)="profile()">Профиль</mat-list-item>
+      <mat-list-item *ngIf="userData.userId" (click)="myWorks()">Мои работы</mat-list-item>
       <mat-form-field appearance="fill">
         <mat-label>Поиск работ</mat-label>
         <mat-select (selectionChange)="onSelectionChange($event)">
@@ -18,7 +18,7 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-      <mat-list-item (click)="logout()">Выход</mat-list-item>
+      <mat-list-item *ngIf="userData.userId" (click)="logout()">Выход</mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
 </mat-sidenav-container>

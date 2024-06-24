@@ -41,6 +41,7 @@ export class MenuComponent {
 
   logout() {
     localStorage.removeItem('user_id');
+    localStorage.removeItem('token');
     this.router.navigate(['/']);
   }
 

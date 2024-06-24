@@ -44,7 +44,7 @@ export class StoreComponent {
 
   handleSelectArts(event: any) {
     console.log('Selected arts', event);
-    if (event.value) this.sendRequest(event.value, 'category');
+    if (event.value || event.value === 0) this.sendRequest(event.value, 'category');
     if (event.user_id) this.sendRequest(event.user_id, 'user');
   }
 

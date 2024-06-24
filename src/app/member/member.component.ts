@@ -8,7 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-member',
   templateUrl: './member.component.html',
-  styleUrls: ['./member.component.css']
+  styleUrls: ['./member.component.css'],
 })
 export class MemberComponent {
   uploadForm: FormGroup;
@@ -17,10 +17,15 @@ export class MemberComponent {
 
   userData = {
     name: '',
-    avatar: ''
+    avatar: '',
   };
 
-  constructor(private http: HttpClient, private router: Router, private jwtHelper: JwtHelperService, private route: ActivatedRoute) {
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private jwtHelper: JwtHelperService,
+    private route: ActivatedRoute
+  ) {
     this.uploadForm = new FormGroup({
       file: new FormControl(null),
       description: new FormControl(''),
@@ -29,15 +34,16 @@ export class MemberComponent {
   }
 
   ngOnInit() {
-    this.getImages();
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const token = params['token'];
       console.log('Token', token);
       if (token) {
         this.decodeToken(token);
         localStorage.setItem('token', token);
+        this.router.navigate(['/store']);
       }
     });
+  
   }
 
   decodeToken(token: string) {
@@ -49,7 +55,7 @@ export class MemberComponent {
     } else {
       this.userData.avatar = decodedToken.avatar;
     }
-    
+
     localStorage.setItem('user_id', decodedToken.user_id);
     console.log('Decoded token', decodedToken);
   }
@@ -65,17 +71,17 @@ export class MemberComponent {
   }
 
   getImages() {
-    const queryParam = `user_id=${localStorage.getItem('user_id')}`
+    const queryParam = `user_id=${localStorage.getItem('user_id')}`;
     this.http.get(`${this.serverName}/images?${queryParam}`).subscribe(
       (response: any) => {
         this.images = response;
         this.images = this.images.map((image) => {
           return {
-            ...image, 
+            ...image,
             url: `${this.serverName}/${image.file_path}`,
           };
         });
-        console.log('Images', this.images)
+        console.log('Images', this.images);
       },
       (error) => console.error('Request failed', error)
     );
@@ -86,12 +92,12 @@ export class MemberComponent {
     const fileControl = this.uploadForm.get('file');
     const descriptionControl = this.uploadForm.get('description');
     const categoryControl = this.uploadForm.get('category');
-    
+
     if (fileControl && descriptionControl && categoryControl) {
       formData.append('file', fileControl.value);
       formData.append('description', descriptionControl.value);
       formData.append('category', categoryControl.value);
-      
+
       const userId = localStorage.getItem('user_id');
       if (!userId) {
         console.error('User ID not found');
@@ -102,7 +108,7 @@ export class MemberComponent {
 
       console.log(formData.get('file'));
       console.log(formData.get('description'));
-  
+
       this.http.post(`${this.serverName}/upload`, formData).subscribe(
         (response) => {
           console.log('Upload response', response);
@@ -113,10 +119,8 @@ export class MemberComponent {
     }
   }
 
-  logout(){
+  logout() {
     localStorage.removeItem('user_id');
     this.router.navigate(['/']);
   }
-
-
 }
