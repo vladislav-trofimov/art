@@ -1,30 +1,54 @@
-<!-- Контейнер для центрирования содержимого -->
-<div (click)="onOpen()" class="container">
-  <div class="user-profile" *ngIf="userData.name">
-    <img [src]="userData.avatar" alt="User Avatar" class="user-avatar">
-    <span class="user-name">{{ userData.name }}</span>
+
+<div class="side-panel left-panel"></div>
+<div class="side-panel right-panel"></div>
+
+<div class="centered-container">
+  
+      <div class="user-profile" *ngIf="userData.name">
+          <img [src]="userData.avatar" alt="User Avatar" class="user-avatar">
+          <span class="user-name">{{ userData.name }}</span>
+      </div>
   </div>
+  <div class="link">
+      <a href="/store">Вернуться к работам</a>
+  </div>
+
+
+
+<div class="profile-and-upload-container">
+  <section class="form-section">
+      <h2>Загрузите ваше изображение</h2>
+      <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm">
+          <input type="file" name="file" (change)="onFileChange($event)" required>
+          <textarea formControlName="description" rows="4" placeholder="Введите описание изображения" required></textarea>
+          <label for="category">Category:</label>
+          <select formControlName="category" id="category">
+              <option value="1" selected>Modern</option>
+              <option value="2">Classic</option>
+              <option value="3">Anime</option>
+              <option value="4">Custom</option>
+          </select>
+          <button type="submit">Отправить</button>
+      </form>
+  </section>
+
+  <section class="form-section">
+      <h2>Изменить ваш профиль</h2>
+      <form>
+          <label>Изменить ваш аватар:</label>
+          <input type="file" name="avatar">
+          <label>Изменить имя пользователя:</label>
+          <input type="text" placeholder="Новое имя пользователя">
+          <label>Изменить пароль:</label>
+          <input type="password" placeholder="Новый пароль">
+          <label>повторить пароль:</label>
+          <input type="password" placeholder="Новый пароль">
+          <button type="submit">Применить изменения</button>
+      </form>
+  </section>
 </div>
 
-<div class="link">
-  <a href="/store">Вернуться к работам</a>
-</div>
 
-<section class="upload-form">
-  <h2>Загрузите ваше изображение</h2>
-  <form (ngSubmit)="onSubmit()" [formGroup]="uploadForm">
-      <input type="file" name="file" (change)="onFileChange($event)" required>
-      <textarea formControlName="description" rows="4" placeholder="Введите описание изображения" required></textarea>
-      <label for="category">Category:</label>
-      <select formControlName="category" id="category">
-          <option value="1" selected>Modern</option>
-          <option value="2">Classic</option>
-          <option value="3">Anime</option>
-          <option value="4">Custom</option>
-      </select>
-      <button type="submit">Отправить</button>
-  </form>
-</section>
 
 <div class="gallery">
   <div *ngFor="let image of images" class="image-card">
@@ -32,7 +56,7 @@
     <div class="info">
       <p class="description">Description: {{ image.description }}</p>
       <p class="author">Author: {{ image.author }}</p>
-      <p class="style">Style: {{ image.category }}</p>
+      <p class="style">Style: {{ image.likes }}</p>
     </div>
 </div>
 

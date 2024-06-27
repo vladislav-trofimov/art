@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { JwtModule } from '@auth0/angular-jwt';
 import { ProfileEditComponent } from './profile-edit/profile-edit.component';
 import { MenuComponent } from './menu/menu.component';
+import { ImageModalComponent } from './image-modal/image-modal.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MenuComponent } from './menu/menu.component';
     StoreComponent,
     MemberComponent,
     ProfileEditComponent,
-    MenuComponent
+    MenuComponent,
+    ImageModalComponent
   ],
   imports: [
     FormsModule,

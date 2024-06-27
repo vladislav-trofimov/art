@@ -1,144 +1,318 @@
-.user-avatar {
-  border-radius: 50%;  
-  width: 200px;        
-  height: 200px;       
-  object-fit: cover;   
-  margin-right:10px;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+
+.wrapper {
+    display: flex;
+    height: 100vh;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #f6e6f9, #f9e6f6);
 }
 
-/* Стили для контейнера, который центрирует содержимое по вертикали и горизонтали */
-.container {
+
+.side-panel {
+  width: 20px; /* Ширина боковых панелей */
+  position: fixed; /* Фиксированное позиционирование */
+  top: 0; /* Прикрепить к верхней части страницы */
+  bottom: 0; /* Прикрепить к нижней части страницы */
+  overflow-y: auto; /* Прокрутка, если содержимое больше высоты экрана */
+  background: linear-gradient(135deg, #ffffff, #c3cfe2);
+  padding: 20px;
+  
+}
+
+.left-panel {
+  left: 0; /* Прикрепить к левой стороне */
+}
+
+.right-panel {
+  right: 0; /* Прикрепить к правой стороне */
+}
+.menu {
+    width: 250px;
+    background-color: rgba(248, 217, 238, 0.9);
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.centered-container {
   display: flex;
-  justify-content: center; /* Выравнивание по горизонтали */
-  margin: 0;
-  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: auto;
+  padding: 20px;
+ 
 }
 
-/* Стили для профиля пользователя */
 .user-profile {
   display: flex;
-  align-items: center; /* Выравнивание элементов внутри по центру по вертикали */
-  gap: 20px; /* Расстояние между элементами */
+  align-items: center;
+  margin-top: 10px;
 }
 
 .user-avatar {
-  width: 100px; /* Ширина аватара */
-  height: 100px; /* Высота аватара */
-  border-radius: 50%; /* Делает аватар круглым */
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .user-name {
-  font-size: 20px; /* Размер шрифта имени пользователя */
-  color: #333; /* Цвет шрифта */
+  margin-left: 20px;
+  font-size: 24px;
+  color: #604a7b;
+}
+.link {
+  margin-top: 20px; /* Отступ сверху для разделения от контейнера */
+  text-align: center; /* Центрирование текста внутри ссылки */
+  width: 100%;
+}
+
+.link a {
+  text-decoration: none;
+  color: #6d5b7b;
+  font-size: 18px;
+  padding: 10px;
+  background-color: #ece9f1;
+
+  transition: color 0.3s;
+}
+
+.link a:hover {
+  color: #bb99cc;
+}
+
+.profile-and-upload-container {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 20px;
+}
+
+.upload-form, .profile-form {
+  flex: 1;
+  padding: 20px;
+  background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 10px;
+}
+
+.upload-form h2, .profile-form h2 {
+  color: #7b6d9a;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    margin: 0 160px;
+}
+
+.image-card {
+    flex: 0 0 calc(33.333% - 10px);
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-card:hover {
+    transform: scale(1.05);
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.info {
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: #604a7b;
+}
+
+.description, .author, .style {
+    margin: 5px 0;
+    font-size: 0.9em;
 }
 
 .upload-form {
+    background: linear-gradient(135deg, #ece9f1, #e0daf6);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: auto;
+}
+
+.upload-form h2 {
+    color: #7b6d9a;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.upload-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.upload-form input[type="file"], .upload-form textarea, .upload-form select {
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #ffffff;
+    box-shadow: inset 0 2px 4px rgba(204, 197, 185, 0.5);
+    font-size: 14px;
+}
+
+.upload-form label {
+    color: #6d5b7b;
+}
+
+.upload-form button {
+    background: linear-gradient(135deg, #bb99cc, #d8b8e4);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.upload-form button:hover {
+    background: linear-gradient(135deg, #d8b8e4, #bb99cc);
+    box-shadow: 0 0 0 2px white, 0 0 0 4px #bfa2db;
+    transform: translateY(-2px);
+}
+
+.upload-form button:active {
+    background: linear-gradient(135deg, #a685b5, #c7a2d3);
+}
+
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.close-button {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.link {
+    color: #7a6590;
+    text-decoration: none;
+}
+.profile-and-upload-container {
+  display: flex;
+  justify-content: space-around; /* Распределение блоков по горизонтали */
+  margin: auto;
+  max-width: 1200px; /* Максимальная ширина контейнера */
+  padding: 20px;
+}
+
+.upload-form, .profile-form {
   background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
   border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  max-width: 500px;
-  margin: auto;
-  font-family: 'Arial', sans-serif;
+  flex: 1; /* Оба блока занимают равное пространство */
+  margin: 10px;
 }
 
-.upload-form h2 {
-  text-align: center;
-  color: #4a4a4a;
-  margin-bottom: 20px;
-  font-size: 24px;
+.input-group {
+  margin-bottom: 15px;
 }
 
-.upload-form form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+.input-group label {
+  display: block; /* Лейблы над инпутами */
+  margin-bottom: 5px;
 }
 
-.upload-form input[type="file"] {
-  border: none;
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-size: 14px;
-}
-
-.upload-form textarea {
-  border: 1px solid #dddddd;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
-  resize: vertical;
-  background-color: #ffffff;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.upload-form label {
-  font-size: 14px;
-  color: #4a4a4a;
-}
-
-.upload-form select {
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  font-size: 14px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.upload-form button {
+.profile-form button, .upload-form button {
   background: linear-gradient(135deg, #6d5bde, #4c4cfd);
   border: none;
-  border-radius: 5px;
-  padding: 10px;
+  border-radius: 50px;
+  padding: 100px;
   color: white;
   font-size: 16px;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
 
-.upload-form button:hover {
+.profile-form button:hover, .upload-form button:hover {
   background: linear-gradient(135deg, #4c4cfd, #3a3aeb);
 }
 
-.upload-form button:active {
+.profile-form button:active, .upload-form button:active {
   background: linear-gradient(135deg, #3a3aeb, #2b2bc9);
 }
-
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+.form-section {
+  background: linear-gradient(135deg, #ece9f1, #e0daf6);
+  border-radius: 10px;
+  padding: 20px 70px; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 20px;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.modal-content {
-  background: #fff;
-  padding: 20px;
+.form-section h2 {
+  
+  color: #7b6d9a;
+  margin-bottom: 2px;
+  font-size: 24px;
+}
+
+.form-section input[type="file"],
+.form-section textarea,
+.form-section select,
+.form-section input[type="text"],
+.form-section input[type="password"] {
   border-radius: 5px;
-  position: relative;
+  height: 40px;
+  width: 300px;
+  background-color: #ffecff;
+  box-shadow: inset 0 2px 4px rgba(204, 197, 185, 0.5);
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 
-.close-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: none;
-  background: none;
-  font-size: 18px;
+.form-section label {
+  color: #6d5b7b;
+  margin-bottom: 5px;
+}
+
+.form-section button {
+  background: linear-gradient(135deg, #bb99cc, #d8b8e4);
+  color: white;
+  font-size: 16px;
   cursor: pointer;
+  transition: background 0.5s ease-in-out, transform 0.5s ease;
+  height: 50px;
+  width: 200px;
+  border-radius: 5px;
+  border: none;
 }
 
-.link {
-  color: #4a4a4a;
-  text-decoration: none;
-  text-align: center;
+.form-section button:hover {
+  background: linear-gradient(135deg, #d8b8e4, #bb99cc);
+  box-shadow: 0 0 0 2px white, 0 0 0 4px #bfa2db;
+  transform: translateY(-2px);
 }
+
+.form-section button:active {
+  background: linear-gradient(135deg, #a685b5, #c7a2d3);
+}
+
