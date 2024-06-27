@@ -2,12 +2,21 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSelectChange } from '@angular/material/select';
 import { JwtHelperService } from '@auth0/angular-jwt';
+
 @Component({
   selector: 'app-store',
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent {
+openModal(_t10: any) {
+throw new Error('Method not implemented.');
+}
+selectedImage: any;
+closeModal() {
+throw new Error('Method not implemented.');
+}
+isModalOpen: any;
 
   constructor(private http: HttpClient,  private jwtHelper: JwtHelperService ) { }
 
