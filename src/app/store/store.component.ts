@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatSelectChange } from '@angular/material/select';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-store',
@@ -9,19 +10,23 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent {
-openModal(_t10: any) {
-throw new Error('Method not implemented.');
-}
-selectedImage: any;
-closeModal() {
-throw new Error('Method not implemented.');
-}
-isModalOpen: any;
-
   constructor(private http: HttpClient,  private jwtHelper: JwtHelperService ) { }
 
   images: any[] = [];
   serverName = 'http://localhost:3000';
+
+  displayMode: string = 'gallery';
+
+  iconColor: string = 'grey';
+
+  currentArt = {
+    id: 0,
+    description: '',
+    url: '',
+    author: '',
+    category: '',
+    likes: 0,
+  };
 
   userData = {
     name: '',
@@ -42,9 +47,18 @@ isModalOpen: any;
     } else {
       this.userData.avatar = decodedToken.avatar;
     }
+  }
 
-    console.log('token', token);
-    console.log('User data', this.userData);
+  toggleColor() {
+    this.currentArt.likes += this.iconColor === 'grey' ? 1 : -1;
+    this.iconColor = this.iconColor === 'grey' ? 'red' : 'grey';
+    this.sendLike(this.currentArt.id, this.currentArt.likes);
+  }
+
+  displayArt(art: any) {
+    console.log(art);
+    this.displayMode = 'art';
+    this.currentArt = art;
   }
 
   onSelectionChange(event: MatSelectChange) {
@@ -55,6 +69,15 @@ isModalOpen: any;
     console.log('Selected arts', event);
     if (event.value || event.value === 0) this.sendRequest(event.value, 'category');
     if (event.user_id) this.sendRequest(event.user_id, 'user');
+  }
+
+  sendLike(id: number, likes: number) {
+    this.http.post(`${this.serverName}/likes`, {id, likes}).subscribe(
+      (response: any) => {
+        console.log('Response', response);  
+      },
+      (error) => console.error('Request failed', error)
+    );
   }
 
   sendRequest(id: number | null, type: string = 'category') {

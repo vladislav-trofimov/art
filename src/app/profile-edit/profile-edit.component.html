@@ -48,8 +48,6 @@
   </section>
 </div>
 
-
-
 <div class="gallery">
   <div *ngFor="let image of images" class="image-card">
     <img [src]="image.url" [alt]="image.description" class="image">
@@ -57,6 +55,12 @@
       <p class="description">Description: {{ image.description }}</p>
       <p class="author">Author: {{ image.author }}</p>
       <p class="style">Style: {{ image.likes }}</p>
+      <mat-icon
+            aria-hidden="false"
+            aria-label="Example like icon"
+            (click)="delete(image)"
+            fontIcon="delete">
+      </mat-icon>
     </div>
 </div>
 
@@ -72,4 +76,3 @@
     </div>
   </div>
 </div>
-

@@ -4,8 +4,8 @@
   </div>
   <div class="side-panel left-panel"></div>
   <div class="content">
-    <div class="gallery">
-      <div *ngFor="let image of images" class="image-card"> 
+    <div class="gallery" *ngIf="displayMode === 'gallery'">
+      <div *ngFor="let image of images" class="image-card" (click)="displayArt(image)"> 
         <img [src]="image.url" [alt]="image.description" class="image">
         <div class="info">
           <p class="description">Description: {{ image.description }}</p>
@@ -15,6 +15,23 @@
           <p><img src="assets/img/thumb.jpg" width="32px"></p>
         </div>
       </div>
+    </div>
+    <div class="art" *ngIf="displayMode === 'art'">
+      <button (click)="displayMode = 'gallery'">Все работы</button>
+      <img [src]="currentArt.url" [alt]="currentArt.description" class="image">
+        <div class="info">
+          <p class="description">Description: {{ currentArt.description }}</p>
+          <p class="author">Author: {{ currentArt.author }}</p>
+          <p class="style">Style: {{ currentArt.category }}</p>
+          <p class ="like">Likes: {{ currentArt.likes }}</p>
+          <mat-icon
+            aria-hidden="false"
+            aria-label="Example like icon"
+            [ngStyle]="{'color': iconColor}"
+            (click)="toggleColor()"
+            fontIcon="thumb_up">
+          </mat-icon>
+        </div>
     </div>
   </div>
   <div class="side-panel right-panel"></div>

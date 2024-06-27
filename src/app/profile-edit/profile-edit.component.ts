@@ -10,7 +10,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class ProfileEditComponent {
 
-  constructor(private http: HttpClient,private jwtHelper: JwtHelperService ) {
+  constructor(private http: HttpClient,private jwtHelper: JwtHelperService) {
     this.uploadForm = new FormGroup({
       file: new FormControl(null),
       description: new FormControl(''),
@@ -125,6 +125,21 @@ export class ProfileEditComponent {
         (error) => console.error('Upload error', error)
       );
     }
+  }
+
+  delete(art: any) {
+    console.log('Delete', art);
+    const userConfirmed = confirm('Are you sure you want to delete this item?');
+    if (!userConfirmed) { 
+      return; 
+    } 
+    this.http.delete(`${this.serverName}/image?id=${art.id}`).subscribe(
+      (response: any) => {
+        console.log('Delete response', response);
+        this.images = this.images.filter((image) => image.id !== art.id);
+      },
+      (error) => console.error('Request failed', error)
+    );
   }
 
   async onSubmitUser() {
