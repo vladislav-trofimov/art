@@ -9,16 +9,10 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   styleUrls: ['./store.component.css']
 })
 export class StoreComponent {
-openModal(_t10: any) {
-throw new Error('Method not implemented.');
-}
-selectedImage: any;
-closeModal() {
-throw new Error('Method not implemented.');
-}
-isModalOpen: any;
+  selectedImage: any;
+  isModalOpen: boolean = false;
 
-  constructor(private http: HttpClient,  private jwtHelper: JwtHelperService ) { }
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) { }
 
   images: any[] = [];
   serverName = 'http://localhost:3000';
@@ -31,8 +25,8 @@ isModalOpen: any;
   ngOnInit() {
     this.sendRequest(null);
     const token = localStorage.getItem('token');
-    if(!token){
-      return
+    if (!token) {
+      return;
     }
     const decodedToken = this.jwtHelper.decodeToken(token);
     this.userData.name = decodedToken.name;
@@ -67,11 +61,20 @@ isModalOpen: any;
           return {
             ...image,
             url: `${this.serverName}/${image.file_path}`,
+            rows: this.getRandomSpan() // Устанавливаем количество строк для каждого изображения
           };
         });
         console.log('Images', this.images);
       },
       (error) => console.error('Request failed', error)
     );
+  }
+
+  getRandomSpan() {
+    return Math.floor(Math.random() * 10) + 10; // Генерация случайного количества строк для каждого изображения
+  }
+
+  incrementLikes(image: any) {
+    image.likes++;
   }
 }

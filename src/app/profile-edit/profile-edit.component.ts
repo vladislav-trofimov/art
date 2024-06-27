@@ -1,36 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient } from '@angular/common/http';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-profile-edit',
   templateUrl: './profile-edit.component.html',
   styleUrls: ['./profile-edit.component.css']
 })
-export class ProfileEditComponent {
+export class ProfileEditComponent implements OnInit {
 
-  constructor(private http: HttpClient,private jwtHelper: JwtHelperService ) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.uploadForm = new FormGroup({
       file: new FormControl(null),
       description: new FormControl(''),
       category: new FormControl(''),
     });
-    this.uploadFormUser = new FormGroup({
+
+    this.profileForm = new FormGroup({
       file: new FormControl(null),
+      name: new FormControl('', Validators.required),
+      newPassword: new FormControl(''),
+      confirmPassword: new FormControl(''),
     });
   }
 
   visible = false;
 
   uploadForm: FormGroup;
-  uploadFormUser: FormGroup;
-
-  profile = {
-    name: '',
-    oldPassword: '',
-    newPassword: ''
-  };
+  profileForm: FormGroup;
 
   userData = {
     name: '',
@@ -41,37 +39,27 @@ export class ProfileEditComponent {
   images: any[] = [];
   serverName = 'http://localhost:3000';
 
-  previewUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
 
   ngOnInit() {
     const token = localStorage.getItem('token');
-    if(!token){
-      return
+    if (!token) {
+      return;
     }
     const decodedToken = this.jwtHelper.decodeToken(token);
     this.userData.name = decodedToken.name;
     this.userData.userId = decodedToken.user_id;
-    console.log('decodedToken', decodedToken);
-    if (decodedToken.id) {
-      this.userData.avatar = `http://localhost:3000/avatar?id=${decodedToken.id}`;
-    } else {
-      this.userData.avatar = decodedToken.avatar;
-    }
+    this.userData.avatar = decodedToken.avatar ? decodedToken.avatar : `http://localhost:3000/avatar?id=${decodedToken.user_id}`;
     this.getImages();
   }
 
   getImages() {
     this.http.get(`${this.serverName}/images?user_id=${this.userData.userId}`).subscribe(
       (response: any) => {
-        this.images = response;
-        this.images = this.images.map((image) => {
-          return {
-            ...image,
-            url: `${this.serverName}/${image.file_path}`,
-          };
-        });
-        console.log('Images', this.images);
+        this.images = response.map((image: any) => ({
+          ...image,
+          url: `${this.serverName}/${image.file_path}`
+        }));
       },
       (error) => console.error('Request failed', error)
     );
@@ -88,13 +76,11 @@ export class ProfileEditComponent {
   }
 
   onFileChangeUser(event: any) {
-    const input = event.target as HTMLInputElement;
-    if (input && input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+    if (event.target.files.length > 0) {
+      this.selectedFile = event.target.files[0];
     }
-    console.log('Selected file', this.selectedFile);
   }
-  
+
   onSubmit() {
     const formData = new FormData();
     const fileControl = this.uploadForm.get('file');
@@ -114,12 +100,8 @@ export class ProfileEditComponent {
 
       formData.append('user_id', userId);
 
-      console.log(formData.get('file'));
-      console.log(formData.get('description'));
-  
       this.http.post(`${this.serverName}/upload`, formData).subscribe(
         (response) => {
-          console.log('Upload response', response);
           this.getImages();
         },
         (error) => console.error('Upload error', error)
@@ -128,14 +110,31 @@ export class ProfileEditComponent {
   }
 
   async onSubmitUser() {
-
-    if (!this.selectedFile) {
-      console.error('No file selected');
+    if (!this.profileForm.valid) {
+      console.error('Form is invalid');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('file', this.selectedFile);
+    const nameControl = this.profileForm.get('name');
+    const newPasswordControl = this.profileForm.get('newPassword');
+    const confirmPasswordControl = this.profileForm.get('confirmPassword');
+
+    if (newPasswordControl?.value !== confirmPasswordControl?.value) {
+      console.error('Passwords do not match');
+      return;
+    }
+
+    const formData: any = {
+      name: nameControl?.value,
+    };
+
+    if (newPasswordControl?.value) {
+      formData.newPassword = newPasswordControl.value;
+    }
+
+    if (this.selectedFile) {
+      formData.avatar = await this.convertFileToBase64(this.selectedFile);
+    }
 
     const userId = localStorage.getItem('user_id');
     if (!userId) {
@@ -143,30 +142,18 @@ export class ProfileEditComponent {
       return;
     }
 
-    formData.append('user_id', userId);
-    console.log(formData.get('file'));
+    formData.userId = userId;
 
-    const base64Image = await this.convertFileToBase64( this.selectedFile);
-    console.log('Base64 image', base64Image);
-
-    this.http.post(`${this.serverName}/upload-user`, {avatar: base64Image, userId}).subscribe(
+    this.http.post(`${this.serverName}/update-profile`, formData).subscribe(
       (response: any) => {
-        console.log('Upload response', response);
-        if (response && response['token']) {
-          localStorage.setItem('token', response['token']);
-          const decodedToken = this.jwtHelper.decodeToken(response['token']);
+        if (response && response.token) {
+          localStorage.setItem('token', response.token);
+          const decodedToken = this.jwtHelper.decodeToken(response.token);
           this.userData.name = decodedToken.name;
-          this.userData.userId = decodedToken.user_id;
-          console.log('decodedToken', decodedToken);
-          if (decodedToken.id) {
-            this.userData.avatar = `http://localhost:3000/avatar?id=${decodedToken.id}`;
-          } else {
-            this.userData.avatar = decodedToken.avatar;
-          }
+          this.userData.avatar = decodedToken.avatar ? decodedToken.avatar : `http://localhost:3000/avatar?id=${decodedToken.user_id}`;
         }
-        this.getImages();
       },
-      (error) => console.error('Upload error', error)
+      (error) => console.error('Update error', error)
     );
   }
 
@@ -178,12 +165,5 @@ export class ProfileEditComponent {
       reader.onerror = error => reject(error);
     });
   }
-
-  onOpen() {
-    this.visible = true;
-  }
-
-  onClose() {
-    this.visible = false;
-  }
 }
+
