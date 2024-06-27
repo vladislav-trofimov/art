@@ -5,14 +5,13 @@
   <div class="side-panel left-panel"></div>
   <div class="content">
     <div class="gallery">
-      <div *ngFor="let image of images" class="image-card"> 
+      <div *ngFor="let image of images" class="image-card" [style.gridRowEnd]="'span ' + image.rows"> 
         <img [src]="image.url" [alt]="image.description" class="image">
         <div class="info">
-          <p class="description">Description: {{ image.description }}</p>
-          <p class="author">Author: {{ image.author }}</p>
-          <p class="style">Style: {{ image.category }}</p>
+         
+          <p class="author">{{ image.author }}</p>
           <p class ="like">Likes: {{ image.likes }}</p>
-          <p><img src="assets/img/thumb.jpg" width="32px"></p>
+          
         </div>
       </div>
     </div>
